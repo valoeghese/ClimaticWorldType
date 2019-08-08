@@ -1,0 +1,11 @@
+{
+  "required": true,
+  "package": "tk.valoeghese.climatic.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "OverworldDimensionMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

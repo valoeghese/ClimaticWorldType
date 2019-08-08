@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "cwt",
+  "version": "1.0.0",
+  
+  "name": "Climatic World Type",
+  "description": "World type which places biomes climatically",
+  "authors": [
+    "Valoeghese"
+  ],
+  
+  "license": "LGPLv3",
+  
+  "environment": "*",
+  
+  "entrypoints": {
+    "main": [
+       "tk.valoeghese.climatic.ClimaticWorldType"
+    ]
+  },
+  
+  "requires": {
+    "fabricloader": ">=0.4.0",
+    "fabric": "*"
+  },
+  
+  "mixins": [
+    "cwt.mixins.json"
+  ]
+}

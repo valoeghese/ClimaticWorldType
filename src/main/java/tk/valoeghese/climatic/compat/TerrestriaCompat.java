@@ -7,6 +7,7 @@ import net.minecraft.util.registry.Registry;
 import tk.valoeghese.climatic.ClimaticWorldType;
 import tk.valoeghese.climatic.api.Climate;
 import tk.valoeghese.climatic.api.ClimateBiomes;
+import tk.valoeghese.climatic.api.OceanClimate;
 
 public final class TerrestriaCompat {
 	private TerrestriaCompat() {
@@ -64,6 +65,7 @@ public final class TerrestriaCompat {
 		ClimateBiomes.addBiome(Climate.SNOWY, TerrestriaBiomes.SNOWY_HEMLOCK_FOREST, 10);
 
 		// Volcanic Island
-		ClimateBiomes.addIslandBiome(TerrestriaBiomes.VOLCANIC_ISLAND_SHORE, 10);
+		ClimateBiomes.addIslandBiome(OceanClimate.WARM, TerrestriaBiomes.VOLCANIC_ISLAND_SHORE, 14);
+		ClimateBiomes.addIslandBiome(OceanClimate.LUKEWARM, TerrestriaBiomes.VOLCANIC_ISLAND_SHORE, 5);
 	}
 }

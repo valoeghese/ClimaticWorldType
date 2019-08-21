@@ -69,8 +69,8 @@ public class ClimaticBiomeLayers {
 
 		climateFactory = IncreaseEdgeCurvatureLayer.INSTANCE.create(random.apply(4L), climateFactory);
 		climateFactory = AddMushroomIslandLayer.INSTANCE.create(random.apply(5L), climateFactory);
-		climateFactory = AddModdedIslandLayer.INSTANCE.create(random.apply(6L), climateFactory);
 		climateFactory = AddDeepOceanLayer.INSTANCE.create(random.apply(4L), climateFactory);
+		climateFactory = AddModdedIslandLayer.INSTANCE.create(random.apply(6L), climateFactory);
 		
 		return climateFactory;
 	}

@@ -6,6 +6,7 @@ import net.minecraft.world.biome.Biomes;
 import tk.valoeghese.climatic.ClimaticWorldType;
 import tk.valoeghese.climatic.api.Climate;
 import tk.valoeghese.climatic.api.ClimateBiomes;
+import tk.valoeghese.climatic.api.OceanClimate;
 
 public final class TraverseCompat {
 	private TraverseCompat() {
@@ -66,7 +67,7 @@ public final class TraverseCompat {
 		ClimateBiomes.addNeighboursForBiome(TraverseBiomes.SNOWY_CONIFEROUS_FOREST, TraverseBiomes.SNOWY_HIGH_CONIFEROUS_FOREST, 5);
 		
 		// Wooded Island
-		ClimateBiomes.addIslandBiome(TraverseBiomes.WOODED_ISLAND, 10);
+		ClimateBiomes.addIslandBiome(OceanClimate.LUKEWARM, TraverseBiomes.WOODED_ISLAND, 10);
 		
 		// Woodlands
 		ClimateBiomes.addBiome(Climate.TROPICAL_STEPPE, TraverseBiomes.WOODLANDS, 3);

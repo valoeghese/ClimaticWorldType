@@ -13,13 +13,14 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.layer.LayerRandomnessSource;
 import tk.valoeghese.climatic.api.Climate;
+import tk.valoeghese.climatic.api.OceanClimate;
 
 public final class ClimateBiomesImpl {
 	private static Climate[] lookup = new Climate[14];
 	
 	private static final Map<Climate, List<Biome>> BIOMES = new HashMap<>();
 	private static final Map<Biome, List<Biome>> NEIGHBOURS = new HashMap<>();
-	private static final List<IslandEntry> ISLAND_ENTRIES = new ArrayList<>();
+	private static final Map<OceanClimate, List<IslandEntry>> ISLAND_ENTRIES = new HashMap<>();
 	private static final Map<Biome, List<EdgeCorrectionEntry>> EDGE_CORRECTIONS = new HashMap<>();
 	private static final Set<Biome> EDGES_TO_CORRECT = new HashSet<>();
 	
@@ -74,8 +75,8 @@ public final class ClimateBiomesImpl {
 		}
 	}
 	
-	public static void addIsland(Biome sub, int chance) {
-		ISLAND_ENTRIES.add(new IslandEntry(sub, chance));
+	public static void addIsland(OceanClimate climate, Biome sub, int chance) {
+		ISLAND_ENTRIES.computeIfAbsent(climate, c -> new ArrayList<>()).add(new IslandEntry(sub, chance));
 		if (!biomesTracker.contains(sub)) {
 			biomesTracker.add(sub);
 			biomes = ArrayUtils.add(biomes, sub);
@@ -96,8 +97,9 @@ public final class ClimateBiomesImpl {
 		return biomes;
 	}
 	
-	public static final int populateIsland(LayerRandomnessSource rand, int defaultResult) {
-		for (IslandEntry entry : ISLAND_ENTRIES) {
+	public static final int populateIsland(OceanClimate climate, LayerRandomnessSource rand, int defaultResult) {
+		List<IslandEntry> entries = ISLAND_ENTRIES.getOrDefault(climate, new ArrayList<>());
+		for (IslandEntry entry : entries) {
 			if (rand.nextInt(entry.chance) == 0) {
 				return Registry.BIOME.getRawId(entry.island);
 			}

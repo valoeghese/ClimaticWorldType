@@ -38,8 +38,23 @@ public final class ClimateBiomes {
 	 * @param chance chance out of 100 to be set
 	 */
 	public static void addIslandBiome(Biome island, int chance) {
+		addIslandBiome(OceanClimate.NONE, island, chance);
+	}
+	
+	/**
+	 * @param island biome to be added as an island
+	 * @param chance chance out of 100 to be set
+	 */
+	public static void addIslandBiome(OceanClimate climate, Biome island, int chance) {
 		if (island != null) {
-			ClimateBiomesImpl.addIsland(island, chance);
+			if (climate == OceanClimate.NONE) {
+				// Add to all climates, including NONE
+				ClimateBiomesImpl.addIsland(OceanClimate.WARM, island, chance);
+				ClimateBiomesImpl.addIsland(OceanClimate.LUKEWARM, island, chance);
+				ClimateBiomesImpl.addIsland(OceanClimate.COLD, island, chance);
+			}
+			
+			ClimateBiomesImpl.addIsland(climate, island, chance);
 		} else {
 			ClimaticWorldType.log.warn("A null biome was attempted to be added!");
 		}

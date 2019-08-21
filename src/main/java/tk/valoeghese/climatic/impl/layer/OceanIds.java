@@ -22,4 +22,8 @@ public interface OceanIds {
 	default public boolean isShallowOcean(int int_1) {
 		return int_1 == WARM_OCEAN || int_1 == LUKEWARM_OCEAN || int_1 == OCEAN || int_1 == COLD_OCEAN || int_1 == FROZEN_OCEAN;
 	}
+	
+	default public boolean isDeepOcean(int int_1) {
+		return int_1 == DEEP_WARM_OCEAN || int_1 == DEEP_LUKEWARM_OCEAN || int_1 == DEEP_OCEAN || int_1 == DEEP_COLD_OCEAN || int_1 == DEEP_FROZEN_OCEAN;
+	}
 }

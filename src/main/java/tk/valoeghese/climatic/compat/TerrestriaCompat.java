@@ -8,6 +8,7 @@ import tk.valoeghese.climatic.ClimaticWorldType;
 import tk.valoeghese.climatic.api.Climate;
 import tk.valoeghese.climatic.api.ClimateBiomes;
 import tk.valoeghese.climatic.api.OceanClimate;
+import tk.valoeghese.climatic.impl.ClimateBiomesImpl;
 
 public final class TerrestriaCompat {
 	private TerrestriaCompat() {
@@ -33,6 +34,9 @@ public final class TerrestriaCompat {
 		ClimateBiomes.addBiome(Climate.HUMID_SUBTROPICAL, TerrestriaBiomes.CALDERA_RIDGE, 5);
 		ClimateBiomes.addBiome(Climate.COOL_TEMPERATE, TerrestriaBiomes.CALDERA_RIDGE, 5);
 		ClimateBiomes.addSmallEdgeCorrection(TerrestriaBiomes.CALDERA_BEACH, TerrestriaBiomes.CALDERA_RIDGE, TerrestriaBiomes.CALDERA);
+		
+		ClimateBiomesImpl.trackBiomeIfAbsent(TerrestriaBiomes.CALDERA);
+		ClimateBiomesImpl.trackBiomeIfAbsent(TerrestriaBiomes.CALDERA_FOOTHILLS);
 		
 		// Cypress Forest
 		ClimateBiomes.addBiome(Climate.MEDITERRANEAN, TerrestriaBiomes.CYPRESS_FOREST, 10);
@@ -67,5 +71,7 @@ public final class TerrestriaCompat {
 		// Volcanic Island
 		ClimateBiomes.addIslandBiome(OceanClimate.WARM, TerrestriaBiomes.VOLCANIC_ISLAND_SHORE, 14);
 		ClimateBiomes.addIslandBiome(OceanClimate.LUKEWARM, TerrestriaBiomes.VOLCANIC_ISLAND_SHORE, 5);
+		
+		ClimateBiomesImpl.trackBiomeIfAbsent(TerrestriaBiomes.VOLCANIC_ISLAND);
 	}
 }

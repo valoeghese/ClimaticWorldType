@@ -9,8 +9,10 @@ import java.util.Set;
 
 import org.apache.commons.lang3.ArrayUtils;
 
+import net.fabricmc.fabric.impl.biomes.InternalBiomeData;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.Biomes;
 import net.minecraft.world.biome.layer.LayerRandomnessSource;
 import tk.valoeghese.climatic.api.Climate;
 import tk.valoeghese.climatic.api.OceanClimate;
@@ -26,6 +28,8 @@ public final class ClimateBiomesImpl {
 	
 	private static Biome[] biomes = new Biome[] {};
 	private static final List<Biome> biomesTracker = new ArrayList<>();
+	
+	private static int injectionCount;
 	
 	private ClimateBiomesImpl() {
 	}
@@ -53,8 +57,7 @@ public final class ClimateBiomesImpl {
 			list.add(biome);
 		}
 		if (!biomesTracker.contains(biome)) {
-			biomesTracker.add(biome);
-			biomes = ArrayUtils.add(biomes, biome);
+			trackBiome(biome);
 		}
 	}
 
@@ -64,8 +67,7 @@ public final class ClimateBiomesImpl {
 			list.add(neighbour);
 		}
 		if (!biomesTracker.contains(neighbour)) {
-			biomesTracker.add(neighbour);
-			biomes = ArrayUtils.add(biomes, neighbour);
+			trackBiome(neighbour);
 		}
 	}
 
@@ -78,8 +80,7 @@ public final class ClimateBiomesImpl {
 	public static void addIsland(OceanClimate climate, Biome sub, int chance) {
 		ISLAND_ENTRIES.computeIfAbsent(climate, c -> new ArrayList<>()).add(new IslandEntry(sub, chance));
 		if (!biomesTracker.contains(sub)) {
-			biomesTracker.add(sub);
-			biomes = ArrayUtils.add(biomes, sub);
+			trackBiome(sub);
 		}
 	}
 	
@@ -88,12 +89,23 @@ public final class ClimateBiomesImpl {
 		EDGES_TO_CORRECT.add(smallEdge);
 		
 		if (!biomesTracker.contains(correction)) {
-			biomesTracker.add(correction);
-			biomes = ArrayUtils.add(biomes, correction);
+			trackBiome(correction);
 		}
 	}
 	
 	public static final Biome[] biomes() {
+		// half-stolen injection code from the biomes api
+		List<Biome> injectedBiomes = InternalBiomeData.getOverworldInjectedBiomes();
+		int injectedBiomesSize = injectedBiomes.size();
+		
+		if (injectionCount < injectedBiomesSize) {
+			List<Biome> toAdd = injectedBiomes.subList(injectionCount, injectedBiomesSize - 1);
+			
+			toAdd.forEach(biome -> trackBiomeIfAbsent(biome));
+			
+			injectionCount += toAdd.size();
+		}
+		
 		return biomes;
 	}
 	
@@ -167,5 +179,34 @@ public final class ClimateBiomesImpl {
 		} else {
 			return 7;
 		}
+	}
+	
+	static {
+		trackBiome(Biomes.COLD_OCEAN);
+		trackBiome(Biomes.DEEP_COLD_OCEAN);
+		trackBiome(Biomes.DEEP_FROZEN_OCEAN);
+		trackBiome(Biomes.DEEP_LUKEWARM_OCEAN);
+		trackBiome(Biomes.DEEP_OCEAN);
+		trackBiome(Biomes.DEEP_WARM_OCEAN);
+		trackBiome(Biomes.FROZEN_OCEAN);
+		trackBiome(Biomes.LUKEWARM_OCEAN);
+		trackBiome(Biomes.OCEAN);
+		trackBiome(Biomes.WARM_OCEAN);
+		
+		trackBiome(Biomes.BEACH);
+		trackBiome(Biomes.SNOWY_BEACH);
+		trackBiome(Biomes.STONE_SHORE);
+		trackBiome(Biomes.MUSHROOM_FIELD_SHORE);
+	}
+	
+	public static void trackBiomeIfAbsent(Biome biome) {
+		if (biomesTracker.contains(biome)) {
+			trackBiome(biome);
+		}
+	}
+	
+	private static void trackBiome(Biome biome) {
+		biomesTracker.add(biome);
+		biomes = ArrayUtils.add(biomes, biome);
 	}
 }

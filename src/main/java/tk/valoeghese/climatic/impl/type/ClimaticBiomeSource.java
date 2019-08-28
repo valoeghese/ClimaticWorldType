@@ -13,8 +13,8 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.layer.BiomeLayerSampler;
 import net.minecraft.world.biome.source.BiomeSource;
 import net.minecraft.world.gen.feature.StructureFeature;
-import tk.valoeghese.climatic.ClimaticWorldType;
 import tk.valoeghese.climatic.impl.ClimateBiomesImpl;
+import tk.valoeghese.climatic.impl.ClimaticWorldTypeHolder;
 import tk.valoeghese.climatic.impl.layer.ClimaticBiomeLayers;
 
 public final class ClimaticBiomeSource extends BiomeSource {
@@ -26,7 +26,7 @@ public final class ClimaticBiomeSource extends BiomeSource {
 	public ClimaticBiomeSource(IWorld world) {
 		worldSeed = world.getSeed();
 
-		BiomeLayerSampler[] biomeLayerSamplers_1 = ClimaticBiomeLayers.create(world.getSeed(), ClimaticWorldType.WORLDTYPE);
+		BiomeLayerSampler[] biomeLayerSamplers_1 = ClimaticBiomeLayers.create(world.getSeed(), ClimaticWorldTypeHolder.WORLDTYPE);
 
 		this.noiseSampler = biomeLayerSamplers_1[0];
 		this.biomeSampler = biomeLayerSamplers_1[1];

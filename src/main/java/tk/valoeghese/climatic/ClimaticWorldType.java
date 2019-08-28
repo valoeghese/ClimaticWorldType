@@ -18,7 +18,6 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.world.biome.Biomes;
 import net.minecraft.world.gen.chunk.ChunkGeneratorType;
 import net.minecraft.world.gen.chunk.OverworldChunkGeneratorConfig;
-import net.minecraft.world.level.LevelGeneratorType;
 import tk.valoeghese.climatic.api.Climate;
 import tk.valoeghese.climatic.api.ClimateBiomes;
 import tk.valoeghese.climatic.compat.TerrestriaCompat;
@@ -26,12 +25,10 @@ import tk.valoeghese.climatic.compat.TraverseCompat;
 import tk.valoeghese.climatic.config.ClimaticConfig;
 import tk.valoeghese.climatic.impl.type.ClimaticChunkGenerator;
 import tk.valoeghese.climatic.impl.type.ClimaticChunkGeneratorType;
-import tk.valoeghese.climatic.impl.type.WorldtypeProvider;
 
 public class ClimaticWorldType implements ModInitializer {
-
-	public static LevelGeneratorType WORLDTYPE = null;
-	public static ChunkGeneratorType<OverworldChunkGeneratorConfig, ClimaticChunkGenerator> CHUNKGEN_TYPE = null;
+	
+	public static ChunkGeneratorType<OverworldChunkGeneratorConfig, ClimaticChunkGenerator> CHUNKGEN_TYPE = new ClimaticChunkGeneratorType().getChunkGeneratorType(OverworldChunkGeneratorConfig::new);
 
 	public static ClimaticConfig config = null; // if it cannot load the config we will get an NPE
 
@@ -40,9 +37,6 @@ public class ClimaticWorldType implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		initConfig();
-
-		WORLDTYPE = WorldtypeProvider.getWorldType();
-		CHUNKGEN_TYPE = new ClimaticChunkGeneratorType().getChunkGeneratorType(OverworldChunkGeneratorConfig::new);
 
 		Registry.register(Registry.CHUNK_GENERATOR_TYPE, from("climatic"), CHUNKGEN_TYPE);
 

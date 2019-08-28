@@ -3,6 +3,7 @@
   "package": "tk.valoeghese.climatic.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "LevelGeneratorTypeMixin",
     "OverworldDimensionMixin"
   ],
   "injectors": {

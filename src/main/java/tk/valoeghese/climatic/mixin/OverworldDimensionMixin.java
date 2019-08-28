@@ -15,6 +15,7 @@ import net.minecraft.world.gen.chunk.ChunkGeneratorType;
 import net.minecraft.world.gen.chunk.OverworldChunkGeneratorConfig;
 import net.minecraft.world.level.LevelGeneratorType;
 import tk.valoeghese.climatic.ClimaticWorldType;
+import tk.valoeghese.climatic.impl.ClimaticWorldTypeHolder;
 import tk.valoeghese.climatic.impl.type.ClimaticBiomeSource;
 import tk.valoeghese.climatic.impl.type.ClimaticChunkGenerator;
 
@@ -31,7 +32,7 @@ public abstract class OverworldDimensionMixin extends Dimension
 		LevelGeneratorType type = this.world.getLevelProperties().getGeneratorType();
 		ChunkGeneratorType<OverworldChunkGeneratorConfig, ClimaticChunkGenerator> chunkGenType = ClimaticWorldType.CHUNKGEN_TYPE;
 		
-		if(type == ClimaticWorldType.WORLDTYPE) {
+		if(type == ClimaticWorldTypeHolder.WORLDTYPE) {
 			OverworldChunkGeneratorConfig settings = new OverworldChunkGeneratorConfig() {
 				@Override
 				public int getBiomeSize() {

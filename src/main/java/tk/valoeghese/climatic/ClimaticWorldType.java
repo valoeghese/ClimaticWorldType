@@ -18,11 +18,13 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.world.biome.Biomes;
 import net.minecraft.world.gen.chunk.ChunkGeneratorType;
 import net.minecraft.world.gen.chunk.OverworldChunkGeneratorConfig;
+import net.minecraft.world.level.LevelGeneratorType;
 import tk.valoeghese.climatic.api.Climate;
 import tk.valoeghese.climatic.api.ClimateBiomes;
 import tk.valoeghese.climatic.compat.TerrestriaCompat;
 import tk.valoeghese.climatic.compat.TraverseCompat;
 import tk.valoeghese.climatic.config.ClimaticConfig;
+import tk.valoeghese.climatic.impl.ClimaticWorldTypeHolder;
 import tk.valoeghese.climatic.impl.type.ClimaticChunkGenerator;
 import tk.valoeghese.climatic.impl.type.ClimaticChunkGeneratorType;
 
@@ -33,10 +35,15 @@ public class ClimaticWorldType implements ModInitializer {
 	public static ClimaticConfig config = null; // if it cannot load the config we will get an NPE
 
 	public static final Logger log = LogManager.getLogger("ClimaticWorldType");
-
+	
+	// load and initialise me on client pls
+	static LevelGeneratorType loadMeOnClientPls;
+	
 	@Override
 	public void onInitialize() {
 		initConfig();
+		
+		loadMeOnClientPls = ClimaticWorldTypeHolder.WORLDTYPE;
 
 		Registry.register(Registry.CHUNK_GENERATOR_TYPE, from("climatic"), CHUNKGEN_TYPE);
 

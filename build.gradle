@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '0.2.4-SNAPSHOT'
+	id 'fabric-loom' version '0.2.6-SNAPSHOT'
 	id 'maven-publish'
 }
 
@@ -23,12 +23,13 @@ repositories {
 dependencies {
 	//to change the versions see the gradle.properties file
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	mappings "net.fabricmc:yarn:${project.yarn_mappings}"
+	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
 	modCompile "net.fabricmc:fabric-loader:${project.loader_version}"
+	modCompile "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 	
-	modImplementation "com.terraformersmc:terraform:${project.terraform_version}"
-	modImplementation "com.terraformersmc:terrestria:${project.terrestria_version}"
-	modImplementation "com.terraformersmc:traverse:${project.traverse_version}"
+	//modImplementation "com.terraformersmc:terraform:${project.terraform_version}"
+	//modImplementation "com.terraformersmc:terrestria:${project.terrestria_version}"
+	//modImplementation "com.terraformersmc:traverse:${project.traverse_version}"
 }
 
 processResources {

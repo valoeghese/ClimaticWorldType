@@ -1,10 +1,10 @@
 package tk.valoeghese.climatic.impl.type;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
 import net.minecraft.world.level.LevelGeneratorType;
+import tk.valoeghese.climatic.mixin.AccessorLevelGeneratorType;
 
 public final class WorldtypeProvider
 {
@@ -55,9 +55,7 @@ public final class WorldtypeProvider
 		}
 		try
 		{
-			Constructor<LevelGeneratorType> constructor = LevelGeneratorType.class.getDeclaredConstructor(int.class, String.class);
-			constructor.setAccessible(true);
-			worldType = constructor.newInstance(id, "climatic");
+			worldType = AccessorLevelGeneratorType.create(id, "climatic");
 			worldType.setCustomizable(false);
 		} catch (Exception e)
 		{

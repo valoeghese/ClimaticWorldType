@@ -24,7 +24,7 @@ public abstract class OverworldDimensionMixin extends Dimension
 {
 	public OverworldDimensionMixin(World world, DimensionType type)
 	{
-		super(world, type);
+		super(world, type, 0.0F);
 	}
 	
 	@Inject(method = "createChunkGenerator", at = @At("RETURN"), cancellable = true)

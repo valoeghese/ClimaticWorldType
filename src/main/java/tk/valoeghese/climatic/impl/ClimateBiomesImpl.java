@@ -9,7 +9,7 @@ import java.util.Set;
 
 import org.apache.commons.lang3.ArrayUtils;
 
-import net.fabricmc.fabric.impl.biomes.InternalBiomeData;
+import net.fabricmc.fabric.impl.biome.InternalBiomeData;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biomes;
@@ -93,6 +93,7 @@ public final class ClimateBiomesImpl {
 		}
 	}
 	
+	/*
 	public static final Biome[] biomes() {
 		// half-stolen injection code from the biomes api
 		List<Biome> injectedBiomes = InternalBiomeData.getOverworldInjectedBiomes();
@@ -108,6 +109,7 @@ public final class ClimateBiomesImpl {
 		
 		return biomes;
 	}
+	*/
 	
 	public static final int populateIsland(OceanClimate climate, LayerRandomnessSource rand, int defaultResult) {
 		List<IslandEntry> entries = ISLAND_ENTRIES.getOrDefault(climate, new ArrayList<>());

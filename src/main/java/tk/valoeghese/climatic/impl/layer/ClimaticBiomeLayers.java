@@ -2,8 +2,6 @@ package tk.valoeghese.climatic.impl.layer;
 
 import java.util.function.LongFunction;
 
-import com.google.common.collect.ImmutableList;
-
 import net.minecraft.world.biome.layer.AddBambooJungleLayer;
 import net.minecraft.world.biome.layer.AddDeepOceanLayer;
 import net.minecraft.world.biome.layer.AddEdgeBiomesLayer;
@@ -14,8 +12,6 @@ import net.minecraft.world.biome.layer.AddRiversLayer;
 import net.minecraft.world.biome.layer.AddSunflowerPlainsLayer;
 import net.minecraft.world.biome.layer.BiomeLayerSampler;
 import net.minecraft.world.biome.layer.CachingLayerContext;
-import net.minecraft.world.biome.layer.CachingLayerSampler;
-import net.minecraft.world.biome.layer.CellScaleLayer;
 import net.minecraft.world.biome.layer.ContinentLayer;
 import net.minecraft.world.biome.layer.EaseBiomeEdgeLayer;
 import net.minecraft.world.biome.layer.IncreaseEdgeCurvatureLayer;
@@ -44,7 +40,7 @@ public class ClimaticBiomeLayers {
 	
 	private static <T extends LayerSampler, C extends LayerSampleContext<T>> LayerFactory<T> buildContinent(LongFunction<C> random) {
 		LayerFactory<T> continentFactory = ContinentLayer.INSTANCE.create(random.apply(1L));
-		continentFactory = ScaleLayer.field_16198.create(random.apply(2000L), continentFactory);
+		continentFactory = ScaleLayer.FUZZY.create(random.apply(2000L), continentFactory);
 
 		continentFactory = IncreaseEdgeCurvatureLayer.INSTANCE.create(random.apply(1L), continentFactory);
 		continentFactory = ScaleLayer.NORMAL.create(random.apply(2001L), continentFactory);
@@ -85,7 +81,7 @@ public class ClimaticBiomeLayers {
 		return biomeFactory;
 	}
 	
-	private static <T extends LayerSampler, C extends LayerSampleContext<T>> ImmutableList<LayerFactory<T>> build(long seed, LongFunction<C> random) {
+	private static <T extends LayerSampler, C extends LayerSampleContext<T>> LayerFactory<T> build(long seed, LongFunction<C> random) {
 		LayerFactory<T> mainLandFactory = buildContinent(random);
 		LayerFactory<T> climateFactory = buildClimate(seed, mainLandFactory, random);
 		
@@ -140,18 +136,13 @@ public class ClimaticBiomeLayers {
 		riverFactory = SmoothenShorelineLayer.INSTANCE.create(random.apply(1000L), riverFactory);
 		
 		LayerFactory<T> mixBiomeFactory = AddRiversLayer.INSTANCE.create(random.apply(100L), biomeFactory, riverFactory);
-		LayerFactory<T> voronoiFactory = CellScaleLayer.INSTANCE.create(random.apply(10L), mixBiomeFactory);
 
-		return ImmutableList.of(mixBiomeFactory, voronoiFactory, mixBiomeFactory);
+		return mixBiomeFactory;
 	}
 
-	public static BiomeLayerSampler[] create(long seed, LevelGeneratorType worldType) {
-		ImmutableList<LayerFactory<CachingLayerSampler>> immutableList_1 = build(seed, (salt) -> {
+	public static BiomeLayerSampler create(long seed, LevelGeneratorType worldType) {
+		return new BiomeLayerSampler(build(seed, (salt) -> {
 			return new CachingLayerContext(25, seed, salt);
-		});
-		BiomeLayerSampler noiseSampler = new BiomeLayerSampler((LayerFactory<CachingLayerSampler>)immutableList_1.get(0));
-		BiomeLayerSampler biomeSampler = new BiomeLayerSampler((LayerFactory<CachingLayerSampler>)immutableList_1.get(1));
-		BiomeLayerSampler unusedSampler = new BiomeLayerSampler((LayerFactory<CachingLayerSampler>)immutableList_1.get(2));
-		return new BiomeLayerSampler[]{noiseSampler, biomeSampler, unusedSampler};
+		}));
 	}
 }

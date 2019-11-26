@@ -21,8 +21,8 @@ import net.minecraft.world.gen.chunk.OverworldChunkGeneratorConfig;
 import net.minecraft.world.level.LevelGeneratorType;
 import tk.valoeghese.climatic.api.Climate;
 import tk.valoeghese.climatic.api.ClimateBiomes;
-import tk.valoeghese.climatic.compat.TerrestriaCompat;
-import tk.valoeghese.climatic.compat.TraverseCompat;
+//import tk.valoeghese.climatic.compat.TerrestriaCompat;
+//import tk.valoeghese.climatic.compat.TraverseCompat;
 import tk.valoeghese.climatic.config.ClimaticConfig;
 import tk.valoeghese.climatic.impl.ClimaticWorldTypeHolder;
 import tk.valoeghese.climatic.impl.type.ClimaticChunkGenerator;
@@ -52,12 +52,12 @@ public class ClimaticWorldType implements ModInitializer {
 
 		addDefaultBiomes(traverseLoaded, terrestriaLoaded);
 
-		if (traverseLoaded) {
-			TraverseCompat.load();
-		}
-		if (terrestriaLoaded) {
-			TerrestriaCompat.load();
-		}
+//		if (traverseLoaded) {
+//			TraverseCompat.load();
+//		}
+//		if (terrestriaLoaded) {
+//			TerrestriaCompat.load();
+//		}
 	}
 
 	private void initConfig() {

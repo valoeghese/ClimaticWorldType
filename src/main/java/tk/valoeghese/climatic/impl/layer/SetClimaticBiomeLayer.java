@@ -17,6 +17,6 @@ public enum SetClimaticBiomeLayer implements SouthEastSamplingLayer, OceanIds {
 			return (prev == COLD_OCEAN && rand.nextInt(3) == 0) ? FROZEN_OCEAN : prev; // ocean
 		}
 	}
-	
-	
+
+
 }
